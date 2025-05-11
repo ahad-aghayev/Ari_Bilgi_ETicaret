@@ -1,0 +1,81 @@
+﻿@{
+    ViewData["Title"] = "Admin Paneli";
+
+}
+
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 30px; margin-bottom: 20px;">
+    <!-- Ürün Kartı   -->
+    <div class="card bg-primary text-white mb-0" style="min-width: 250px;">
+        <div class="card-body">
+            Toplam Ürün: @ViewBag.ProductCount
+        </div>
+    </div>
+    <!-- Saat   -->
+    <div style="font-weight: bold; font-size: 35px; line-height: 1.5;" id="clock"></div>
+</div>
+ 
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        Ürünler
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple" class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Adı</th>
+                    <th>Kayıt Tarihi</th>
+                    <th>Resim</th>
+                    <th>Fiyat</th>
+                    <th>Ürün Kodu</th>
+                    <th>Stok</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Adı</th>
+                    <th>Kayıt Tarihi</th>
+                    <th>Resim</th>
+                    <th>Fiyat</th>
+                    <th>Ürün Kodu</th>
+                    <th>Stok</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach (var item in ViewBag.Produtcs)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.CreateDate</td>
+                        <td>
+                            <img src="/Img/Products/@item.Image" alt="" height="30">
+                        </td>
+                        <td>@item.Price</td>
+                        <td>@item.ProductCode</td>
+                        <td>@item.Stock</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="/admin/assets/demo/chart-area-demo.js"></script>
+    <script src="/admin/assets/demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script src="/admin/js/datatables-simple-demo.js"></script>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            document.getElementById('clock').textContent = timeString;
+        }
+
+        setInterval(updateClock, 1000); // Her saniye güncelle
+        updateClock(); // Sayfa yüklendiğinde hemen göster
+    </script>
+}
